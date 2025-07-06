@@ -26,6 +26,11 @@ The web application maintains **shared state across instances** by centralizing 
 
 ### Start the system
 
+Install k6 for macOs:
+````
+brew install k6
+```
+
 ```bash
 cd ScalabilityProject
 docker compose up --build
@@ -42,4 +47,8 @@ docker compose up --build
 ```
 
 #### test health
-docker compose ps
+
+### running k6 locally:
+````
+k6 run load-pressure-simulation.js
+```
