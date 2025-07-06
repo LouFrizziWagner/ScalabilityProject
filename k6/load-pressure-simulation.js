@@ -40,13 +40,13 @@ export default function () {
 
   const headers = { 'Content-Type': 'application/json' };
 
-  const postRes = http.post(`${BASE_URL}/sensor-data`, payload, { headers });
+  const postRes = http.post(`${BASE_URL}/api/sensor-data`, payload, { headers });
   check(postRes, {
     'POST status is 201': (r) => r.status === 201
   });
 
   // Simulate data viewer GET
-  const getRes = http.get(`${BASE_URL}/recent-sensor-data`);
+  const getRes = http.get(`${BASE_URL}/api/recent-sensor-data`);
   check(getRes, {
     'GET status is 200': (r) => r.status === 200,
     'GET returned array': (r) => Array.isArray(JSON.parse(r.body)),
