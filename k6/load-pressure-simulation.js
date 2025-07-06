@@ -7,15 +7,15 @@ export const options = {
   scenarios: {
     stress_test: {
       executor: 'ramping-arrival-rate',
-      startRate: 50,          // requests per second (RPS)
+      startRate: 500,          // requests per second (RPS)
       timeUnit: '1s',
       preAllocatedVUs: 100,   // initial VUs
-      maxVUs: 1000,           // max VUs it can scale to
+      maxVUs: 5000,           // max VUs it can scale to
       stages: [
-        { target: 200, duration: '30s' },  // ramp to 200 RPS
-        { target: 400, duration: '30s' },  // ramp to 400 RPS
-        { target: 800, duration: '30s' },  // ramp to 800 RPS
-        { target: 0, duration: '30s' },    // ramp-down
+        { target: 1000, duration: '1m' },
+        { target: 2000, duration: '1m' },
+        { target: 4000, duration: '1m' },
+        { target: 0, duration: '30s' },
       ],
     },
   },
