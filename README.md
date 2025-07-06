@@ -27,5 +27,19 @@ The web application maintains **shared state across instances** by centralizing 
 ### Start the system
 
 ```bash
-cd scalable-test-app
+cd ScalabilityProject
 docker compose up --build
+```
+
+### Restart the system
+```
+# wipes the volumes
+docker compose down -v
+
+
+# rebuild
+docker compose up --build
+```
+
+#### test health
+docker compose ps

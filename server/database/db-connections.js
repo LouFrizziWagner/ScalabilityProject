@@ -5,7 +5,7 @@ const pool = new Pool({
   host: 'postgres',
   user: 'sensor_user',
   password: 'taichi',
-  database: 'multi_modal_sensor_station_data',
+  database: 'sensor-observations-database',
   port: 5432,
 });
 

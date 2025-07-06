@@ -5,9 +5,10 @@ services:
     environment:
       POSTGRES_USER: sensor_user
       POSTGRES_PASSWORD: taichi
-      POSTGRES_DB: multi_modal_sensor_station_data
+      POSTGRES_DB: sensor-observations-database
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./server/database/initialize.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
 
@@ -18,6 +19,8 @@ services:
       timeout: 5s
       retries: 5
     build: ./server
+    ports:
+    - "3000:3000"
     #container_name: replica1
     depends_on:
       - postgres
@@ -46,13 +49,13 @@ services:
       - replica2
       - replica3
 
-  k6:
-    image: grafana/k6
-    volumes:
-      - ./k6:/scripts
-    entrypoint: ["k6", "run", "/scripts/load-pressure-simulation.js"]
-    depends_on:
-      - nginx
+  # k6:
+  #   image: grafana/k6
+  #   volumes:
+  #     - ./k6:/scripts
+  #   entrypoint: ["k6", "run", "/scripts/load-pressure-simulation.js"]
+  #   depends_on:
+  #     - nginx
 
 volumes:
   pgdata:

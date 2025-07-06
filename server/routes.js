@@ -16,7 +16,7 @@ router.post('/sensor-data', async (req, res) => {
   } = req.body;
 
   try {
-    await db.query(
+    await db.pool.query(
       `INSERT INTO multi_modal_sensor_station_data (
         timestamp,
         sensor_id,
@@ -46,7 +46,7 @@ router.post('/sensor-data', async (req, res) => {
 /** USERS GET ENDPOINTS */
 router.get('/recent-sensor-data', async (req, res) => {
   try {
-    const result = await db.query(
+    const result = await db.pool.query(
       'SELECT * FROM multi_modal_sensor_station_data ORDER BY timestamp DESC LIMIT 10'
     );
     res.json(result.rows);

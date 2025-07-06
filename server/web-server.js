@@ -24,16 +24,9 @@ app.use('/api', router);
 
 // Starting server after initializing dtabase connection
 init().then(() => {
-  app.listen(port, () => {
-    console.log(`Sensor app running on port ${port}`);
-  });
+  app.listen(3000, '0.0.0.0', () => {
+    console.log('Server is running now on the port 3000');
+});
 })
 
-// db.init().then(() => {
-//   app.listen(port, () => {
-//     console.log(`Sensor app running on port ${port}`);
-//   });
-  // app.listen(3000, '0.0.0.0', () => {
-  // console.log('Sensor app Server running on port 3000');
-// });
-});
+
