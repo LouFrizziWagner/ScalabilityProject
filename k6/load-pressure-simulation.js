@@ -3,12 +3,22 @@
 import http from 'k6/http';
 import { sleep, check } from 'k6';
 
-export let options = {
-  stages: [
-    { duration: '10s', target: 10 },   // ramp-up to 10 virtual users
-    { duration: '20s', target: 10 },   // sustain
-    { duration: '10s', target: 0 },    // ramp-down
-  ],
+export const options = {
+  scenarios: {
+    stress_test: {
+      executor: 'ramping-arrival-rate',
+      startRate: 50,          // requests per second (RPS)
+      timeUnit: '1s',
+      preAllocatedVUs: 100,   // initial VUs
+      maxVUs: 1000,           // max VUs it can scale to
+      stages: [
+        { target: 200, duration: '30s' },  // ramp to 200 RPS
+        { target: 400, duration: '30s' },  // ramp to 400 RPS
+        { target: 800, duration: '30s' },  // ramp to 800 RPS
+        { target: 0, duration: '30s' },    // ramp-down
+      ],
+    },
+  },
 };
 
 const BASE_URL = 'http://localhost:3000'; // Change if needed
@@ -52,6 +62,6 @@ export default function () {
     'GET returned array': (r) => Array.isArray(JSON.parse(r.body)),
   });
 
-  sleep(1); // 1 second between iterations
+  //sleep(1); // 1 second between iterations
 }
 
