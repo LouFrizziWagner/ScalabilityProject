@@ -27,7 +27,7 @@ The web application maintains **shared state across instances** by centralizing 
 ### Start the system
 
 Install k6 for macOs:
-````
+```
 brew install k6
 ```
 
@@ -46,9 +46,49 @@ docker compose down -v
 docker compose up --build
 ```
 
+### Containers
+| Container Name                  | Defined In         | Role                                                                                                  |
+| ------------------------------- | ------------------ | ----------------------------------------------------------------------------------------------------- |
+| `scalabilityproject-nginx-1`    | `nginx` service    | Runs **Nginx reverse proxy** <br>Handles **rate limiting**, **proxying**, optional **load balancing** |
+| `scalabilityproject-replica1-1` | `replica1` service | Runs **Node.js app** <br>Handles actual app logic (e.g., APIs, DB queries)                            |
+
+#### Addresses
+| Address          | What It Hits                             | Role                       |
+| ---------------- | ---------------------------------------- | -------------------------- |
+| `localhost:3000` | Directly hits the Node.js app (replica1) | Application server         |
+| `localhost:8080` | Goes through Nginx reverse proxy (nginx) | Load balancer + throttling |
+
 #### test health
 
 ### running k6 locally:
-````
+```
 k6 run load-pressure-simulation.js
+```
+
+### Test throttling
+```
+for i in {1..20}; do curl -s -o /dev/null -w "%{http_code}\n" http://localhost:8080/; done
+```
+Valid result:
+```
+200
+200
+200
+200
+200
+200
+200
+200
+200
+200
+200
+200
+200
+503
+503
+503
+200
+503
+503
+503
 ```
