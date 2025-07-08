@@ -21,7 +21,7 @@ export const options = {
   },
 };
 
-const BASE_URL = 'http://localhost:3000'; // Change if needed
+const BASE_URL = 'http://localhost:8080'; // Change if needed
 
 // Sample payload generator
 function generateSensorData() {
