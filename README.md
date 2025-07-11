@@ -99,3 +99,6 @@ Run k6, examine result:
     iteration_duration......................................................: avg=365.55ms min=235.16µs max=5.46s p(90)=1.35s    p(95)=2s      
 ```
 Check if the range (min to max) reflects the randomness of delay (jitter) we applied.
+
+### Test Idempotency API (POST)
+Add 'Idempotency-Key' to header, send two requests with the same key and make sure only one record is added to the database.
