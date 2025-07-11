@@ -56,10 +56,17 @@ export default function () {
   });
 
   // Simulate data viewer GET
-  const getRes = http.get(`${BASE_URL}/api/recent-sensor-data`);
-  check(getRes, {
+  // const getRes = http.get(`${BASE_URL}/api/recent-sensor-data`);
+  // check(getRes, {
+  //   'GET status is 200': (r) => r.status === 200,
+  //   'GET returned array': (r) => Array.isArray(JSON.parse(r.body)),
+  // });
+
+  // Simulate count GET
+  const getCountRes = http.get(`${BASE_URL}/api/count`);
+  check(getCountRes, {
     'GET status is 200': (r) => r.status === 200,
-    'GET returned array': (r) => Array.isArray(JSON.parse(r.body)),
+    'GET response message': (r) => Array.isArray(r.body),
   });
 
   //sleep(1); // 1 second between iterations

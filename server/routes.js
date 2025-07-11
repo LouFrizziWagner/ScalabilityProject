@@ -56,4 +56,16 @@ router.get('/recent-sensor-data', async (req, res) => {
   }
 });
 
+router.get('/count', async (req, res) => {
+  try {
+    const result = await db.pool.query(
+      'SELECT COUNT(*) FROM multi_modal_sensor_station_data'
+    );
+    res.status(200).send(`Total data count: ${result.rows[0].count}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('DB Error');
+  }
+})
+
 export default router;
