@@ -44,11 +44,23 @@ function generateSensorData() {
   });
 }
 
+// idempotent key generator
+function uuidv4() {
+  // Generate RFC4122 version 4 UUID
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
 export default function () {
   // Simulate sensor data POST
   const payload = generateSensorData();
+  const idempotentKey = uuidv4();
+  // console.log(idempotentKey);
 
-  const headers = { 'Content-Type': 'application/json' };
+  const headers = { 'Content-Type': 'application/json', 'Idempotency-Key': idempotentKey };
 
   const postRes = http.post(`${BASE_URL}/api/sensor-data`, payload, { headers });
   check(postRes, {
@@ -63,11 +75,11 @@ export default function () {
   // });
 
   // Simulate count GET
-  const getCountRes = http.get(`${BASE_URL}/api/count`);
-  check(getCountRes, {
-    'GET status is 200': (r) => r.status === 200,
-    'GET response message': (r) => Array.isArray(r.body),
-  });
+  // const getCountRes = http.get(`${BASE_URL}/api/count`);
+  // check(getCountRes, {
+  //   'GET status is 200': (r) => r.status === 200,
+  //   'GET response message': (r) => Array.isArray(r.body),
+  // });
 
   //sleep(1); // 1 second between iterations
 }

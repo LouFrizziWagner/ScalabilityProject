@@ -5,9 +5,20 @@ import router from './routes.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import jitterMiddleware from './middleware/jitter.js';
+import idempotencyMiddleware from './middleware/idempotency.js';
+import redis from 'redis';
 
 const app = express();
 const port = 3000;
+const client = redis.createClient({
+  url: 'redis://redis:6379'
+})
+
+async function start() {
+  await client.connect();
+}
+
+start();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,6 +33,8 @@ app.use(jitterMiddleware(100, 500));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
+
+app.use('/api/sensor-data',idempotencyMiddleware(client));
 
 // API routes
 app.use('/api', router);
