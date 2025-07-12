@@ -7,7 +7,8 @@ function idempotencyMiddleware(client) {
 
         const cached = await client.get(key);
         if (cached) {
-            return res.send(JSON.parse(cached));
+            const cachedData = JSON.parse(cached);
+            return res.status(cachedData.status).send(cachedData.body);
         }
 
         const originalSend = res.send.bind(res);
