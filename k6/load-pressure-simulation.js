@@ -81,6 +81,14 @@ export default function () {
   //   'GET response message': (r) => Array.isArray(r.body),
   // });
 
+  // Simulate temperature GET
+  const getTempRes = http.get(`${BASE_URL}/api/max-temperature`);
+  check(getTempRes, {
+    'GET status is 200': (r) => r.status === 200,
+    'GET status is 503': (r) => r.status === 503,
+    'GET response message': (r) => Array.isArray(r.body),
+  });
+
   //sleep(1); // 1 second between iterations
 }
 
