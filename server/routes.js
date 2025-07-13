@@ -65,6 +65,7 @@ router.get('/max-temperature', async (req, res) => {
       `SELECT MAX(temperature) FROM multi_modal_sensor_station_data`
       // `SELECT timestamp, temperature FROM multi_modal_sensor_station_data WHERE sensor_id = '${sensor_id}'`
     );
+    console.info("queried from db")
     res.status(200).send(Number(result.rows[0].max));
   } catch (err) {
     console.error(err);
