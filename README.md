@@ -2,7 +2,9 @@
 
 A minimal, scalable sensor data web application that demonstrates state sharing across replicated backend instances, load balancing via NGINX, and performance testing using synthetic and concurrent loads.
 
-## system Architecture
+Project demo: [link](https://www.canva.com/design/DAGsgxn55yQ/eDxbYLf_B0eyfKQNqQLEJw/view?utm_content=DAGsgxn55yQ&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=ha94298273c#13)
+
+## System Architecture
 
 This project showcases a horizontally and vertically scalable web application stack.
 
@@ -96,7 +98,7 @@ Valid result:
 ### Test Jitter
 Run k6, examine result:
 ```
-    iteration_duration......................................................: avg=365.55ms min=235.16µs max=5.46s p(90)=1.35s    p(95)=2s      
+    http_req_duration.......................................................: avg=318.34ms min=102.55ms med=319.23ms max=708.84ms p(90)=477.86ms p(95)=496.76ms      
 ```
 Check if the range (min to max) reflects the randomness of delay (jitter) we applied.
 
