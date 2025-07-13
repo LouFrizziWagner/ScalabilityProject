@@ -9,6 +9,7 @@ import idempotencyMiddleware from './middleware/idempotency.js';
 import redis from 'redis';
 import cacheMiddleware from './middleware/cache.js';
 import readCacheMiddleware from './middleware/readCache.js';
+//import queueMiddleware from './middleware/queue.js';
 
 const app = express();
 const port = 3000;
@@ -30,7 +31,7 @@ const __dirname = path.dirname(__filename);
 app.use(bodyParser.json());
 
 // Server side Queue
-app.use(queueMiddleware);
+//app.use(queueMiddleware);
 
 // Jitter (variation in the time delay)
 app.use(jitterMiddleware(0, 100));

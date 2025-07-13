@@ -36,15 +36,15 @@ services:
     #container_name: replica3
     depends_on:
       - postgres
-  replica4:
-    build: ./server
-    depends_on:
-      - postgres
-  replica5:
-    build: ./server
-    #container_name: replica3
-    depends_on:
-      - postgres
+  # replica4:
+  #   build: ./server
+  #   depends_on:
+  #     - postgres
+  # replica5:
+  #   build: ./server
+  #   #container_name: replica3
+  #   depends_on:
+  #     - postgres
 
   nginx:
     image: nginx:alpine
@@ -57,8 +57,8 @@ services:
       - replica1
       - replica2
       - replica3
-      - replica4
-      - replica5
+      # - replica4
+      # - replica5
   redis:
     image: redis:6.2.5-alpine
 
