@@ -4,6 +4,21 @@ A minimal, scalable sensor data web application that demonstrates state sharing 
 
 Project demo: [link](https://www.canva.com/design/DAGsgxn55yQ/eDxbYLf_B0eyfKQNqQLEJw/view?utm_content=DAGsgxn55yQ&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=ha94298273c#13)
 
+
+## Application Scenario
+Multi-modal sensor stations send measurements from parks and forests from all over berlin-brandenburg. The measurements are made publicly accessable through a website.
+The more sensors are installed, and the more users want to read the website - the more load presses on the backend server.
+Scaling is then managed through nginx and three implemented horizontal scaling methods.
+
+### Example POST request body data from three clients.
+
+| ID  | Timestamp                  | Sensor ID                   | Temperature (°C) | Humidity (%) | Frequency (Hz) | CO₂ (ppm) | Light Intensity (lux) |
+|-----|----------------------------|-----------------------------|------------------|--------------|----------------|-----------|------------------------|
+| 825 | 2025-07-13T14:28:56.449Z  | park-station-golm           | 29.44            | 52.53        | 449.09         | 404.7     | 343.99                 |
+| 823 | 2025-07-13T14:28:56.247Z  | forest-station-grunewald    | 23.41            | 50.16        | 449.6          | 399.08    | 381.04                 |
+| 824 | 2025-07-13T14:28:56.052Z  | park-station-tiergarten     | 21.49            | 41.53        | 446.37         | 408.92    | 310.11                 |
+
+
 ## System Architecture
 
 This project showcases a horizontally and vertically scalable web application stack.
