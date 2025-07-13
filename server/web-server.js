@@ -7,9 +7,11 @@ import { fileURLToPath } from 'url';
 import jitterMiddleware from './middleware/jitter.js';
 import idempotencyMiddleware from './middleware/idempotency.js';
 import redis from 'redis';
+import queueMiddleware from './middleware/queue.js';
 
 const app = express();
 const port = 3000;
+
 const client = redis.createClient({
   url: 'redis://redis:6379'
 })
@@ -18,7 +20,7 @@ async function start() {
   await client.connect();
 }
 
-start();
+await start();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,24 +28,30 @@ const __dirname = path.dirname(__filename);
 // Middleware
 app.use(bodyParser.json());
 
-// Add jitter to all routes
-app.use(jitterMiddleware(100, 500));
+// Server side Queue
+app.use(queueMiddleware);
+
+// Jitter (variation in the time delay)
+app.use(jitterMiddleware(0, 100));
+
+app.use('/api/sensor-data',idempotencyMiddleware(client));
 
 // Serve static view for testing
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.use('/api/sensor-data',idempotencyMiddleware(client));
 
 // API routes
 app.use('/api', router);
 
 // Starting server after initializing database connection
 init().then(() => {
-  app.listen(3000, '0.0.0.0', () => {
-    console.log('Server is running now on the port 3000');
+  app.listen(port, '0.0.0.0', () => {
+    console.log(`Server is running on http://localhost:${port}`);
+  });
+}).catch((err) => {
+  console.error('Failed to initialize the DBMS:', err);
 });
-})
 
 

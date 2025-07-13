@@ -57,13 +57,16 @@ router.get('/recent-sensor-data', async (req, res) => {
 });
 
 router.get('/max-temperature', async (req, res) => {
-  const {
-    sensor_id
-  } = req.query;
   try {
     const result = await db.pool.query(
-      `SELECT MAX(temperature) FROM multi_modal_sensor_station_data`
-      // `SELECT timestamp, temperature FROM multi_modal_sensor_station_data WHERE sensor_id = '${sensor_id}'`
+      `
+      SELECT MAX(temperature) FROM (
+        SELECT temperature
+        FROM multi_modal_sensor_station_data
+        ORDER BY timestamp DESC
+        LIMIT 1000
+      ) AS recent_data
+      `
     );
     res.json(result.rows);
   } catch (err) {

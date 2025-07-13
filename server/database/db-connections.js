@@ -9,8 +9,8 @@ const pool = new Pool({
   port: 5432,
 });
 
-const maxRetries = 10;
-const retryDelayMs = 2000;
+const maxRetries = 5;
+const retryDelayMs = 500;
 
 export async function init() {
   for (let i = 0; i < maxRetries; i++) {
