@@ -68,7 +68,8 @@ router.get('/max-temperature', async (req, res) => {
       ) AS recent_data
       `
     );
-    res.json(result.rows);
+    console.info("queried from db")
+    res.status(200).send(Number(result.rows[0].max));
   } catch (err) {
     console.error(err);
     res.status(500).send('DB Error');

@@ -7,7 +7,8 @@ import { fileURLToPath } from 'url';
 import jitterMiddleware from './middleware/jitter.js';
 import idempotencyMiddleware from './middleware/idempotency.js';
 import redis from 'redis';
-import queueMiddleware from './middleware/queue.js';
+import cacheMiddleware from './middleware/cache.js';
+import readCacheMiddleware from './middleware/readCache.js';
 
 const app = express();
 const port = 3000;
@@ -41,6 +42,12 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// Idempotent API
+app.use('/api/sensor-data',idempotencyMiddleware(client));
+
+// Caching
+app.use('/api/sensor-data', cacheMiddleware(client));
+app.use('/api/max-temperature', readCacheMiddleware(client, "maxTemperature"));
 
 // API routes
 app.use('/api', router);
