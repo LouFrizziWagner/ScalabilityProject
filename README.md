@@ -2,8 +2,7 @@
 
 A minimal, scalable sensor data web application that demonstrates state sharing across replicated backend instances, load balancing via NGINX, and performance testing using synthetic and concurrent loads.
 
-Project demo: [link](https://www.canva.com/design/DAGsgxn55yQ/eDxbYLf_B0eyfKQNqQLEJw/view?utm_content=DAGsgxn55yQ&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=ha94298273c#13)
-
+Project demo: [link](https://www.canva.com/design/DAGsgxn55yQ/eDxbYLf_B0eyfKQNqQLEJw/view?utm_content=DAGsgxn55yQ&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=ha94298273c)
 
 ## Application Scenario
 Multi-modal sensor stations send measurements from parks and forests from all over berlin-brandenburg. The measurements are made publicly accessable through a website.
